@@ -6,21 +6,20 @@
 /*   By: ataouaf <ataouaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 10:41:20 by ataouaf           #+#    #+#             */
-/*   Updated: 2023/08/06 18:04:49 by ataouaf          ###   ########.fr       */
+/*   Updated: 2023/08/08 11:20:09 by ataouaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "../exec.h"
 
-void ft_free_token(t_token *t)
+void	ft_free_token(t_token *t)
 {
-	t_token *last;
+	t_token	*last;
 
-
-	if(t == NULL)
-		return;
-	while(t)
+	if (t == NULL)
+		return ;
+	while (t)
 	{
 		last = t;
 		t = t->next;
@@ -29,21 +28,21 @@ void ft_free_token(t_token *t)
 	}
 }
 
-void ft_error_2(char *msg)
+void	ft_error_msg(char *msg, int fd)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while(msg[++i])
-		write(STDERR_FILENO, &msg[i], 1);
+	while (msg[++i])
+		write(fd, &msg[i], 1);
 	g_exit_status = 2;
 }
 
-void ft_protection(char *to_check, void *optional, t_token **t)
+void	ft_protection(char *to_check, void *optional, t_token **t)
 {
-	if(to_check == NULL)
+	if (to_check == NULL)
 	{
-		if(optional != NULL)
+		if (optional != NULL)
 			free (optional);
 		ft_free_token(*t);
 		exit (1);

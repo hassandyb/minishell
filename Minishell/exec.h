@@ -6,19 +6,19 @@
 /*   By: ataouaf <ataouaf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:51:58 by ataouaf           #+#    #+#             */
-/*   Updated: 2023/08/06 18:22:42 by ataouaf          ###   ########.fr       */
+/*   Updated: 2023/08/08 12:44:53 by ataouaf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <dirent.h>
 #include <fcntl.h>
+#include <limits.h>
 #include <signal.h>
 #include <string.h>
 #include <sys/errno.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <limits.h>
 
 #define NC "\033[0m"
 #define CYAN "\033[1;36m"
@@ -27,12 +27,7 @@
 #define BOLD "\033[1m"
 
 extern int	g_exit_status;
-
-#define HD_EOF \
-"minishell: warning: here-document delimited by end-of-file \
-(wanted `%s')\n"
-#define E_OPERATOR_PARSE \
-"minishell: not a valid identifier\n"
+#define E_OPERATOR_PARSE "minishell: not a valid identifier\n"
 
 typedef enum e_tokens
 {
@@ -98,12 +93,6 @@ void		ft_get_last_cmd(t_exec *exec, int idx, char *path, char **args);
 
 // TODO builtins
 
-t_env		*ft_new_list(char *str);
-t_env		*ft_list_search(t_env *env, char *searched);
-void		ft_list_add_back(t_env **env, t_env *new_env);
-int			ft_list_size(t_env *env);
-void		free_env_list(t_env **head);
-void		ft_list_clearone(t_env **root, t_env *todel);
 void		ft_cd(char **args, t_env *env, t_exec *exec);
 void		ft_unset(t_env **env, char **command);
 void		ft_exit(char **args, t_exec *exec);
@@ -116,13 +105,12 @@ void		ft_echo(char **array_str);
 
 //** utils
 
-void		ft_putstr_fd(char *s, int fd);
 void		*ft_calloc(size_t count, size_t size);
-char		*ft_strcpy(char *s1, char *s2);
 int			ft_strlcpy(char *dst, char *src, size_t size);
 char		*ft_strchr(const char *s, int c);
 int			ft_strcmp(char *s1, char *s2);
-// int			parse_line(char *line);
+void	ft_printf(char *str1, char *str2, char *cmd, int fd);
+void	close_unused_hd(int heredoc_fd[16][2], int cmd_nb);
 int			ft_is_pipe(char c);
 int			ft_is_redirection(char c);
 int			ft_is_space(char c);
@@ -151,7 +139,11 @@ void		heredoc_close(int arr_heredoc[16][2]);
 void		handle_signal(int sig);
 void		handle_redirection(t_exec *exec, int nbr_command);
 
-
-// main.c
+// env
 t_env		*ft_get_env(char **envp);
-
+t_env		*ft_new_list(char *str);
+t_env		*ft_list_search(t_env *env, char *searched);
+void		ft_list_add_back(t_env **env, t_env *new_env);
+int			ft_list_size(t_env *env);
+void		free_env_list(t_env **head);
+void		ft_list_clearone(t_env **root, t_env *todel);
