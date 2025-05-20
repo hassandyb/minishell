@@ -1,5 +1,4 @@
 
-```markdown
 # Minishell: Your Personal Command Line Interface
 
 Welcome to **Minishell**, an exciting project that brings the magic of command-line interfaces to life! Developed as part of the 42 network curriculum, Minishell is a custom shell designed to help you understand the inner workings of command-line interfaces and process management.
@@ -45,7 +44,7 @@ Creating your own shell from scratch is a rewarding challenge that deepens your 
 3. **Run Your Shell**:
    ```bash
    ./minishell
-   ```
+
 
 4. **Explore and Experiment**: Try running commands, redirecting input/output, and using pipes.
 
